@@ -1,7 +1,21 @@
+import styled from "styled-components";
+import GlobalStyles from "./styles/GlobalStyles.js";
+
+
+const H1= styled.h1`
+  font-size: 30px;
+  font-weight: 600;
+`
 
 function App() {
-
-  return <p>hello</p>
+  return(
+      <>
+    <GlobalStyles/>
+  <div>
+    <H1>the Wild Oasis</H1>
+  </div>
+  </>
+  )
 }
 
 export default App
