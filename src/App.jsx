@@ -8,6 +8,7 @@ import Account from "./pages/Account.jsx";
 import Login from "./pages/Login.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import GlobalStyles from "./styles/GlobalStyles.js";
+import AppLayout from "./ui/AppLayout.jsx";
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
 <GlobalStyles/>
      <BrowserRouter>
          <Routes>
+             <Route element={<AppLayout/>}>
              <Route index element={<Navigate replace to='dashboard'/>} />
              <Route path='dashboard' element={<Dashboard/>} />
              <Route path='bookings' element={<Bookings/>} />
@@ -22,6 +24,7 @@ const App = () => {
              <Route path='users' element={<Users/>} />
              <Route path='setting' element={<Settings/>} />
              <Route path='account' element={<Account/>} />
+             </Route>
              <Route path='login' element={<Login/>} />
              <Route path='*' element={<PageNotFound/>} />
          </Routes>
