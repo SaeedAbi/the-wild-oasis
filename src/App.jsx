@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import GlobalStyles from "./styles/GlobalStyles.js";
+import Heading from "./ui/Heading.jsx";
 
 
 const H1= styled.h1`
@@ -12,7 +13,7 @@ function App() {
       <>
     <GlobalStyles/>
   <div>
-    <H1>the Wild Oasis</H1>
+    <Heading>the Wild Oasis</Heading>
   </div>
   </>
   )
