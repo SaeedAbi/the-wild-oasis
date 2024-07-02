@@ -47,7 +47,19 @@ const Discount = styled.div`
 const CabinRow = ({cabin}) => {
     const {id:cabinId, name,maxCapacity,regularPrice,discount,image}=cabin
 
+    const queryClient=useQueryClient()
 
+    const {isLoading:isDeleting,mutate}= useMutation({
+        mutationFn:(id)=>deleteCabin(id),
+        onSuccess:()=>{
+            toast.success('cabin successfully deleted!')
+
+            queryClient.invalidateQueries({
+                queryKey:['cabins'],
+            })
+        },
+        onError:err => toast.error(err.message)
+    })
 
     return <TableRow role='row'>
             <Img src={image}/>
@@ -55,7 +67,7 @@ const CabinRow = ({cabin}) => {
             <div>Fits up to {maxCapacity} guests</div>
             <Price>{formatCurrency(regularPrice)}</Price>
             <Discount>{formatCurrency(discount)}</Discount>
-            <button>Delete</button>
+            <button onClick={()=>mutate(cabinId)} disabled={isDeleting}>Delete</button>
     </TableRow>
 };
 
