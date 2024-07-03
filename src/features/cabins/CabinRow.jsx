@@ -3,6 +3,10 @@ import {formatCurrency} from "../../utils/helpers.js";
 import {useState} from "react";
 import CreateCabinForm from "./CreateCabinForm.jsx";
 import {useDeleteCabin} from "../../hooks/useDeleteCabin.js";
+import {HiSquare2Stack, HiTrash} from "react-icons/hi2";
+import {HiPencil} from "react-icons/hi2";
+import {useCabins} from "../../hooks/useCabins.js";
+import {useCreateCabin} from "../../hooks/useCreateCabin.js";
 
 const TableRow = styled.div`
   display: grid;
@@ -47,8 +51,17 @@ const Discount = styled.div`
 const CabinRow = ({cabin}) => {
     const [showForm, setShowForm] = useState(false)
    const {isDeleting,deleteCabin} = useDeleteCabin()
+    const {id: cabinId, name, maxCapacity, regularPrice, discount, image,description} = cabin
 
-    const {id: cabinId, name, maxCapacity, regularPrice, discount, image} = cabin
+    const {isCreating,createCabin}=useCreateCabin()
+
+    function handleDuplicate(){
+        createCabin({
+            name:`Copy of ${name}`,
+            maxCapacity,regularPrice,discount,image,description
+        })
+    }
+
 
     return( <>
         <TableRow role='row'>
@@ -59,8 +72,9 @@ const CabinRow = ({cabin}) => {
             {discount ? <Discount>{formatCurrency(discount)}</Discount>:<span>&mdash;</span>
             }
         <div>
-            <button onClick={() => setShowForm(show => !show)}>Edit</button>
-            <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>Delete</button>
+            <button disabled={isCreating} onClick={handleDuplicate}><HiSquare2Stack/></button>
+            <button onClick={() => setShowForm(show => !show)}><HiPencil/></button>
+            <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}><HiTrash/></button>
         </div>
     </TableRow>
             {showForm && <CreateCabinForm cabinToEdit={cabin}/>}
