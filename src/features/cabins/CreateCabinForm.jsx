@@ -87,7 +87,7 @@ const {errors}=formState
       </FormRow>
 
       <FormRow label='Description for website' error={errors?.description?.message}>
-        <Textarea disabled={isWorking} type="number" id="description" defaultValue="" {...register('description',{
+        <Textarea type="number" id="description" defaultValue="" {...register('description',{
             required:"This field is required",
         })} />
       </FormRow>
