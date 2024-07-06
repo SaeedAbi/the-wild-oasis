@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import {formatCurrency} from "../../utils/helpers.js";
-import {useState} from "react";
 import CreateCabinForm from "./CreateCabinForm.jsx";
 import {useDeleteCabin} from "../../hooks/useDeleteCabin.js";
 import {HiSquare2Stack, HiTrash} from "react-icons/hi2";
 import {HiPencil} from "react-icons/hi2";
-import {useCabins} from "../../hooks/useCabins.js";
 import {useCreateCabin} from "../../hooks/useCreateCabin.js";
+import Modal from "../../ui/Modal.jsx";
 
 const TableRow = styled.div`
   display: grid;
@@ -49,11 +48,11 @@ const Discount = styled.div`
 
 
 const CabinRow = ({cabin}) => {
-    const [showForm, setShowForm] = useState(false)
    const {isDeleting,deleteCabin} = useDeleteCabin()
+    const {isCreating,createCabin}=useCreateCabin()
+
     const {id: cabinId, name, maxCapacity, regularPrice, discount, image,description} = cabin
 
-    const {isCreating,createCabin}=useCreateCabin()
 
     function handleDuplicate(){
         createCabin({
@@ -63,7 +62,7 @@ const CabinRow = ({cabin}) => {
     }
 
 
-    return( <>
+    return(
         <TableRow role='row'>
         <Img src={image}/>
         <Cabin>{name}</Cabin>
@@ -73,12 +72,19 @@ const CabinRow = ({cabin}) => {
             }
         <div>
             <button disabled={isCreating} onClick={handleDuplicate}><HiSquare2Stack/></button>
-            <button onClick={() => setShowForm(show => !show)}><HiPencil/></button>
+            <Modal>
+                <Modal.Open opens='edit'>
+                    <button><HiPencil/></button>
+                </Modal.Open>
+                <Modal.Window name='edit'>
+                    <CreateCabinForm cabinToEdit={cabin}/>
+                </Modal.Window>
             <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}><HiTrash/></button>
+            </Modal>
         </div>
     </TableRow>
-            {showForm && <CreateCabinForm cabinToEdit={cabin}/>}
-        </>
+
+
     )
 
 }
