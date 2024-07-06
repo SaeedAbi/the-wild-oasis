@@ -21,6 +21,7 @@ const TableHeader = styled.header`
  import CabinRow from "./CabinRow.jsx";
  import {useCabins} from "../../hooks/useCabins.js";
  import Table from "../../ui/Table.jsx";
+ import Menus from "../../ui/Menus.jsx";
 
  const CabinTable = () => {
 
@@ -29,6 +30,7 @@ const TableHeader = styled.header`
 if (isLoading) return <Spinner/>
 
      return (
+         <Menus>
          <Table columns='0.6fr 1.8fr 2.2fr 1fr 1fr 1fr'>
              <Table.Header >
                  <div></div>
@@ -40,6 +42,7 @@ if (isLoading) return <Spinner/>
              </Table.Header>
              <Table.Body data={cabins} render={cabin=><CabinRow cabin={cabin} key={cabin.id}/>}/>
          </Table>
+         </Menus>
      );
  };
 
