@@ -6,11 +6,12 @@ import Input from "../../ui/Input.jsx";
 import FormRow from "../../ui/FormRow.jsx";
 import {useForm} from "react-hook-form";
 import {useCreateCabin} from "../../hooks/useCreateCabin.js";
-import {useEditCobin} from "../../hooks/useEditCabin.js";
+import {useEditCabin} from "../../hooks/useEditCabin.js";
+import {useContext} from "react";
 
 function CreateCabinForm({cabinToEdit={},onCloseModal}) {
     const {isCreating,createCabin}=useCreateCabin()
-    const {isEditing,editCabin}=useEditCobin()
+    const {isEditing,editCabin}=useEditCabin()
     const isWorking = isCreating || isEditing
     const {id:editID,...editValues}=cabinToEdit
     const isEditSession=Boolean(editID)
@@ -21,27 +22,34 @@ function CreateCabinForm({cabinToEdit={},onCloseModal}) {
 const {errors}=formState
 
     function onSubmit(data){
-        const image=typeof data.image === 'string' ? data.image:data.image[0]
+        const image=typeof data.image === 'string' ? data.image : data.image[0]
 
-        if (isEditSession) editCabin({newCabinData:{...data,image},id:editID},{
-            onSuccess:()=>{
-                reset()
-                onCloseModal?.()
-            }
-        })
-        else createCabin({...data,image:image},{
-            onSuccess:()=>{
-                reset()
-                onCloseModal?.()
-            }
-        })
+        if (isEditSession) {
+            editCabin({newCabinData: {...data, image}, id: editID}, {
+                onSuccess: (data) => {
+                    reset()
+                    onCloseModal?.()
+                }
+            })
+        }
+        else {
+            createCabin({...data, image: image}, {
+                onSuccess: (data) => {
+                    reset()
+                    onCloseModal?.()
+                }
+            })
+        }
     }
 
+    function onError(errors){
+        console.log(errors)
+    }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} type={onCloseModal ? 'modal': 'regular'}>
+    <Form onSubmit={handleSubmit(onSubmit,onError)} type={onCloseModal ? 'modal': 'regular'}>
       <FormRow label='Cabin name' error={errors?.name?.message} >
-        <Input disabled={isWorking} type="text" id="name"  {...register('name',{
+        <Input type="text" id="name" disabled={isWorking} {...register('name',{
             required:"This field is required",
         })}/>
 
@@ -52,7 +60,7 @@ const {errors}=formState
             required:"This field is required",
             min:{
                 value:1,
-                message:'Capacity should be atleast 1'
+                message:'Capacity should be at least 1'
             }
         })} />
       </FormRow>
@@ -60,6 +68,10 @@ const {errors}=formState
       <FormRow label='Regular price' error={errors?.regularPrice?.message}>
         <Input disabled={isWorking} type="number" id="regularPrice" {...register('regularPrice',{
             required:"This field is required",
+            min:{
+                value:1,
+                message:'capacity should be at least 1'
+            }
         })} />
       </FormRow>
 
@@ -78,16 +90,16 @@ const {errors}=formState
 
       <FormRow label='Cabin photo'>
         <FileInput id="image" accept="image/*" {...register('image',{
-            required: isEditSession? false:"This field is required",
+            required: isEditSession ? false :"This field is required",
         })}/>
       </FormRow>
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset" onClick={()=>onCloseModal?.()}>
+        <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button disabled={isWorking}>{isEditSession ? 'Edit cobin':'Create new cabin'}</Button>
+        <Button disabled={isWorking}>{isEditSession ? 'Edit cabin':'Create new cabin'}</Button>
       </FormRow>
     </Form>
   );
