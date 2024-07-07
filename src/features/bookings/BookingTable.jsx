@@ -5,9 +5,10 @@ import Empty from "../../ui/Empty.jsx";
 import {useBookings} from "../../hooks/useBookings.js";
 import Spinner from "../../ui/Spinner.jsx";
 import Pagination from "../../ui/Pagination.jsx";
+import account from "../../pages/Account.jsx";
 
 function BookingTable() {
-  const {bookings,isLoading}=useBookings()
+  const {bookings,isLoading,count}=useBookings()
 
   if (isLoading) return <Spinner/>
   if (!bookings.length) return <Empty resource='bookings'/>
@@ -31,7 +32,7 @@ function BookingTable() {
           )}
         />
         <Table.Footer>
-          <Pagination count={15}/>
+          <Pagination count={count}/>
         </Table.Footer>
       </Table>
     </Menus>
