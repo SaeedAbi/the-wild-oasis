@@ -24,7 +24,7 @@ const HeadingGroup = styled.div`
 function BookingDetail() {
   const {booking, isLoading}=useBooking()
   console.log(booking)
-  const {status,id:bookingId}=booking
+  const {id:bookingId}=booking
 
   const navigate=useNavigate()
 
@@ -42,12 +42,14 @@ function BookingDetail() {
       <Row type="horizontal">
         <HeadingGroup>
           <Heading as="h1">Booking #{bookingId}</Heading>
-          <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
+          <Tag type={statusToTagName[booking?.status]}>{booking?.status.replace("-", " ")}</Tag>
         </HeadingGroup>
         <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
       </Row>
 
       <BookingDataBox booking={booking} />
+
+
 
       <ButtonGroup>
         {status==='unconfirmed' && <Button icon={<HiArrowDownOnSquare/>} onClick={() => navigate(`/checkin/${bookingId}`)}>
