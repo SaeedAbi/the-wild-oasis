@@ -4,6 +4,7 @@ import Spinner from "../../ui/Spinner.jsx";
 import {useRecentStays} from "../../hooks/useRecentStays.js";
 import Stats from "./Stats.jsx";
 import {useCabins} from "../../hooks/useCabins.js";
+import SalesChart from "./SalesChart.jsx";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -25,7 +26,7 @@ const {bookings,isLoading}=useRecentBookings()
             <Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} cabinCount={cabins.length}/>
             <div>today activities</div>
             <div>chart stay duration</div>
-            <div>chart sales</div>
+            <SalesChart bookings={bookings} numDays={numDays}/>
         </StyledDashboardLayout>
     );
 }
