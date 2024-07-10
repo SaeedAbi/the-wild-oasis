@@ -5,6 +5,7 @@ import {useRecentStays} from "../../hooks/useRecentStays.js";
 import Stats from "./Stats.jsx";
 import {useCabins} from "../../hooks/useCabins.js";
 import SalesChart from "./SalesChart.jsx";
+import DurationChart from "./DurationChart.jsx";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -25,7 +26,7 @@ const {bookings,isLoading}=useRecentBookings()
         <StyledDashboardLayout>
             <Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} cabinCount={cabins.length}/>
             <div>today activities</div>
-            <div>chart stay duration</div>
+            <DurationChart confirmedStays={confirmedStays}/>
             <SalesChart bookings={bookings} numDays={numDays}/>
         </StyledDashboardLayout>
     );

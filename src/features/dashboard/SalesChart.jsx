@@ -14,19 +14,7 @@ const StyledSalesChart = styled(DashboardBox)`
     stroke: var(--color-grey-300);
   }
 `;
-const colors = isDarkMode
-  ? {
-      totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
-      extrasSales: { stroke: "#22c55e", fill: "#22c55e" },
-      text: "#e5e7eb",
-      background: "#18212f",
-    }
-  : {
-      totalSales: { stroke: "#4f46e5", fill: "#c7d2fe" },
-      extrasSales: { stroke: "#16a34a", fill: "#dcfce7" },
-      text: "#374151",
-      background: "#fff",
-    };
+
 
 
 function SalesChart({bookings,numDays}) {
@@ -62,7 +50,7 @@ function SalesChart({bookings,numDays}) {
 
   return (
       <StyledSalesChart>
-        <Heading as='h2'>Sales</Heading>
+        <Heading as='h2'>Sales from {format(allDates.at(0),'MMM dd yyyy')} &mdash; {format(allDates.at(-1),'MMM dd yyyy')}</Heading>
 <ResponsiveContainer height={300} width="100%">
         <AreaChart data={data}>
           <XAxis dataKey='label' tick={{fill: colors.text}} tickLine={{stroke: colors.text}}/>
