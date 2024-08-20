@@ -2,7 +2,7 @@ import styled from "styled-components";
 import DashboardBox from "./DashboardBox";
 import Heading from "../../ui/Heading.jsx";
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {useDarkMode} from "../../contex/DarkModeContext.jsx";
+import {useDarkMode} from "../../context/DarkModeContext.jsx";
 import {eachDayOfInterval, format, isSameDay, subDays} from "date-fns";
 
 const StyledSalesChart = styled(DashboardBox)`

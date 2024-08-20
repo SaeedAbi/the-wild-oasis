@@ -133,7 +133,7 @@ function prepareData(startData, stays) {
 
 import Heading from "../../ui/Heading.jsx";
 import {Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip} from "recharts";
-import {useDarkMode} from "../../contex/DarkModeContext.jsx";
+import {useDarkMode} from "../../context/DarkModeContext.jsx";
 
 function DurationChart({confirmedStays}) {
   const {isDarkMode}=useDarkMode()

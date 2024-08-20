@@ -12,7 +12,7 @@ height: 100vh;
     justify-content: center;
 `
 
-function PortectedRoute({children}) {
+function ProtectedRoute({children}) {
     const navigate=useNavigate()
 const {isLoading,isAuthenticated}=useUser()
 
@@ -25,4 +25,4 @@ const {isLoading,isAuthenticated}=useUser()
     if (isAuthenticated) return children
 }
 
-export default PortectedRoute;
+export default ProtectedRoute;
